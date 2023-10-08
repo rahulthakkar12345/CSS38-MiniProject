@@ -1,0 +1,298 @@
+
+/* Default css styling done */
+
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin:0;
+    background: #ff9966;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ff5e62, #ff9966);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ff5e62, #ff9966); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: 'IBM Plex Serif', serif;
+}
+
+/* all content our website is inside .container */
+.container {
+    background-color: white;
+    min-height: calc( 100vh - 20px );
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 30px 0 30px;
+}
+
+/* Because we are learning about making different menus,
+all menu have <nav> elements */
+
+
+nav {
+    background-color: #3F51B5;
+}
+nav ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+nav ul li {
+    padding: 20px;
+}
+nav ul li:hover {
+    background-color: #1a2770;
+}
+nav ul a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+}
+
+
+/* Now getting into flex properties to understand flex better */
+
+
+/* Simple Menu */
+/* 1 */
+.simple ul {
+    display: flex; /* (1A) This will make all items horizontal */
+    flex-direction: column; /* (1B) this is because we want all items inside our container to be set vertically */
+    /* (1C) This is for smaller screen. We will use @media (min-width) to set all items horizontally */
+    justify-content: space-around; 
+    /* (1D) We want space around the item so we have item at the right/left end have space too */
+
+}
+
+
+/* 2 */
+/* When we compress our browser screen, we see now element have changed its direction from spreading vertically to now spreading horizontally */
+
+.simple ul li{
+    text-align:center; /*(2A) Now going vertically, we want items to be center */
+    margin-bottom: 1rem; 
+    /* (2B) when our browser window is compressed, we want items to have bottom margin when items are aligned vertically */
+}
+
+
+
+/* 3 */
+/* When we compress our widow, the last list item of unordered list have some bottom-margin we dont want*/
+/* to remove it */
+.simple ul li:last-of-type{
+    margin-bottom: 0;
+}
+
+
+
+
+/* (1D) */
+@media screen and (min-width:768px) {
+    .simple ul {
+        flex-direction: row;
+    }
+ /* (2C)  */
+/* When items get margin of 1rem, we notice a lot of unrequired space when items are aligned vertically, so we want to remove margin-bottom when screen size is greater than 768px */ 
+    .simple ul li {
+        margin-bottom: 0;
+    }
+    
+}
+
+
+
+/* 4 */
+/* With Icon */
+/* I cannot work with Menu with icon because fontawesome is not working  */
+
+/* 
+
+.icons ul li a {
+    display: flex;
+    justify-content:center;
+    flex:1;
+}
+.icons .icon{
+    font-size: 2rem;
+    flex: 0 0 3rem;
+}
+
+.icons .text {
+    font-size: 1.4rem;
+}
+.icons .text span {
+    font-size: .8rem;
+    display: block;
+    margin-top: 10px;
+}
+
+@media screen and (min-width:480px) {
+    .icons ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .icons ul li {
+        display: flex;
+        flex: 0 0 calc( 50% - 2rem);
+    }
+}
+@media screen and (min-width:768px) {
+    .icons ul li {
+        display: flex;
+        flex: 1;
+    }
+} 
+
+*/
+
+
+/* DropDown Menu */
+
+/* 5 */
+/* We will consider <ul> as flex container and <li> as flex items */
+/* 5A */
+.dropdown ul {
+    display: flex;
+    /* (8A) */ flex-direction: column;
+}
+
+/* 8B */
+/* Now we are setting the view with media query for pc/laptop view */
+@media screen and (min-width:768px) {
+    .dropdown ul {
+        flex-direction: row;
+        /* Now it looks much better than before */
+    }
+}
+
+
+/* 5B */
+.dropdown ul li {
+    display: flex;
+    flex-direction: column; /* 5C When we change li to have flex-direction as column, we can see sub ul list positioning below the parent ul */
+}
+
+
+/* 9 */
+/* Now we want hover effect such a way, in mobile device the UnOrderedList <ul> are displayed only when hovered on <li> of parent UNORDERED LIST */
+.dropdown ul li ul {
+    display: none;  /* this will hide element at the movement.
+                       we will be setting the hover property to change its display property */
+}
+
+/* 10 */
+/* Now we want to display <ul> of parent <li> when mouse hovers */
+.dropdown ul li:hover ul {
+    display: block; /* display is block because we want elements inside <ul> of parent <li> to acquire its own space as h1/h2 and not appear inline as <a>/<img> */
+}
+
+
+/* 11 */
+/* we want to change background color when it is hovered over list items<li> of unordered list <ul>(child) inside the <li> of <ul>(parent) */
+.dropdown ul li ul li:hover{
+    background-color: #ff5e62;
+}
+
+
+
+/* 6 */
+/* In order to create drop down menu, we will create a media query*/
+/* This will be how it will appear on pc/laptop */
+
+@media screen and (min-width:768px) {
+/* 6A */
+    .dropdown ul li  { /* we are targeting list item of parent <ul> unordered list */
+        position: relative; /* we want list item of parent unordered list to be position relative to the viewport/document */
+        flex: 0 1 100%;/* (7E) we have shorthand of flex with flex grow to 0, flex shrink to 1 and flex basis to be 100% */
+
+    }
+/* 6B */
+    .dropdown ul li ul {  /* Now we are targeting unordered list<ul> which is inside a list of parent <ul> */
+        position: absolute; /* we have set position of its parent container li of ul ( ul>li) to be absolute positioned, So will set its absolute position which will be an relationship for its positions as per container it is within  */
+        top:100%;  /* now have to define its position in respect to its container */ /* Change top: 110% or 50% to see the difference */
+        left:0;   /* now have to define its position in respect to its container */ /* Change left: 20% or 50% to see the difference */
+        display: none; /* (7A) we dont want <ul> element of parent <li> to get displayed when we access with hover like this,
+        we will be setting its CSS properties when mouse hovers  */
+    }
+/* 7B */
+    .dropdown ul li:hover ul {  /* So we want to set CSS properties of <ul> inside <li> when it get hover over by mouse */
+        display: flex;
+        background-color: #ff5e62;
+        /* (7C) When we hover we see items spread horizontal next to one another */
+        /* So we will use wrap property to force flex items wrap in its container widht   */
+        flex-wrap: wrap;   
+
+        /* 7D */
+        /* Now when we hover we see the space on left side of hover background */
+        /* For this we <ul> of item to fill the available space of its parent  */
+        /* Here, <ul> has <li> as its parent container so we will add flex into it */
+        
+        /* 7F so now <ul> will take all available space of its parent <li> */
+    }
+
+}
+
+/* 8  */
+/* when when we compress our browser window we can see <li> of parent <ul> displaying below.   */
+/* we want on mobile device, when menu is hovered, it expands below to show its element inside  */
+
+/* 8A For this we will have flex direction to be column for our unordered list */
+
+
+
+
+
+/** Social Networks **/
+
+
+/* 12 */
+/* This uses font awesome */
+
+/*  
+
+.social-menu ul li span{
+    display: none;
+}
+.social-menu ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    justify-content: flex-end;
+    
+    <<<<this is comment >>>>>
+    justify-content: center;
+    justify-content: space-around; 
+    justify-content: space-between;
+     <<<<this is comment >>>>>
+
+    
+    
+    flex:1 0 auto;
+}
+.social-menu ul li a:before {
+    font-family: "Font Awesome 5 Brands";
+}
+.social-menu ul li a[href*='facebook.com']::before {
+    content: "\f39e";
+}
+
+.social-menu ul li a[href*='twitter.com']::before {
+    content: "\f099";
+}
+.social-menu ul li a[href*='youtube.com']::before {
+    content: "\f431";
+}
+.social-menu ul li a[href*='instagram.com']::before {
+    content: "\f16d";
+}
+.social-menu ul li a[href*='pinterest.com']::before {
+    content: "\f231 ";
+}
+
+
+
+*/
+
+
+
+
